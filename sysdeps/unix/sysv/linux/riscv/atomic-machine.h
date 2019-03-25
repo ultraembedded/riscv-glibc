@@ -194,12 +194,17 @@ typedef uintmax_t uatomic_max_t;
    this purpose.  RISCV_ATOMIC_CMPXCHG will perform an atomic compare
    and exchange operation for a 32-bit value.  RISCV_ATOMIC_CMPXCHG64
    will do the same for a 64-bit value. */
+#define ATOMIC_EXCHANGE_USES_CAS 1
 
 #include <sys/syscall.h>
 #include <sysdep.h>
 
 #define __HAVE_64B_ATOMICS (__riscv_xlen >= 64)
 #define USE_ATOMIC_COMPILER_BUILTINS 0
+
+#define RISCV_ATOMIC_CMPXCHG    1
+#define RISCV_ATOMIC_CMPXCHG64  2
+#define __NR_sysriscv  __NR_arch_specific_syscall
 
 #define __arch_compare_and_exchange_val_8_acq(mem, newval, oldval) \
   (abort (), (__typeof (*mem)) 0)
